@@ -15,7 +15,6 @@ COPY scripts scripts
 COPY emails emails
 
 ENV NODE_ENV production
-RUN npx browserslist@latest --update-db
 RUN yarn run build
 
 FROM golang:1.16.0-alpine3.13 as go-builder

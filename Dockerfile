@@ -17,6 +17,8 @@ COPY emails emails
 ENV NODE_ENV production
 RUN yarn run build
 
+RUN ls /usr/src/app/public
+
 FROM golang:1.16.0-alpine3.13 as go-builder
 
 RUN apk add --no-cache gcc g++
@@ -77,6 +79,8 @@ RUN export GF_GID_NAME=$(getent group $GF_GID | cut -d':' -f1) && \
 COPY --from=go-builder /go/src/github.com/grafana/grafana/bin/linux-amd64/grafana-server /go/src/github.com/grafana/grafana/bin/linux-amd64/grafana-cli ./bin/
 COPY --from=js-builder /usr/src/app/public ./public
 COPY --from=js-builder /usr/src/app/tools ./tools
+
+RUN ls /usr/share/grafana/public
 
 EXPOSE 3000
 

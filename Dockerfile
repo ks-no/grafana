@@ -17,7 +17,7 @@ COPY emails emails
 ENV NODE_ENV production
 RUN yarn run build
 
-RUN ls /usr/src/app/public
+RUN ls /usr/src/app/public/build
 
 FROM golang:1.16.0-alpine3.13 as go-builder
 
@@ -80,7 +80,7 @@ COPY --from=go-builder /go/src/github.com/grafana/grafana/bin/linux-amd64/grafan
 COPY --from=js-builder /usr/src/app/public ./public
 COPY --from=js-builder /usr/src/app/tools ./tools
 
-RUN ls /usr/share/grafana/public
+RUN ls /usr/share/grafana/public/build
 
 EXPOSE 3000
 
